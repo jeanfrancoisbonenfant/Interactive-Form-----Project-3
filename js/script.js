@@ -96,6 +96,14 @@ const credit_Card_Number_Input = document.querySelector("#cc-num");
 const zip_code_Input = document.querySelector("#zip");
 const cvv_Input = document.querySelector("#cvv");
 const activities_Checkbox = document.querySelectorAll("#activities-box input");
+const input_list = [
+  name_Input,
+  email_Input,
+  credit_Card_Number_Input,
+  zip_code_Input,
+  cvv_Input,
+  activities_Checkbox,
+];
 
 const functionList = {
   name: function () {
@@ -149,6 +157,7 @@ for (let i = 0; i < activities_Checkbox.length; i++) {
     activities_Label.className = "";
   });
 }
+
 /* Validation function Section
    ========================================================================== */
 const is_Valid = (element) => {
@@ -169,14 +178,18 @@ const is_Not_Valid = (element) => {
 const form = document.getElementsByTagName("form")[0];
 form.addEventListener("submit", (e) => {
   for (let key in functionList) {
-    if (!functionList[key]()) {
-      e.preventDefault();
-      is_Not_Valid(functionList[key]);
-      console.log("error!");
-    } else {
-      e.preventDefault();
-      is_Valid(functionList[key]);
-      console.log("woot woot!");
+    for (let i = 0; i < input_list.length; i++) {
+      if (!functionList[key]()) {
+        e.preventDefault();
+        is_Not_Valid(input_list[i]);
+        console.log("error!");
+        break;
+      } else {
+        e.preventDefault();
+        is_Valid(input_list[i]);
+        console.log("woot woot!");
+        break;
+      }
     }
   }
 });
