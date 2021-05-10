@@ -99,10 +99,10 @@ const activities_Checkbox = document.querySelectorAll("#activities-box input");
 const input_list = [
   name_Input,
   email_Input,
+  activities_Checkbox,
   credit_Card_Number_Input,
   zip_code_Input,
   cvv_Input,
-  activities_Checkbox,
 ];
 
 const functionList = {
