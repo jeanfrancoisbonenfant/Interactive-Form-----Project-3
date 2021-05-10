@@ -6,6 +6,7 @@ const other_Job = document.getElementById("other-job-role");
 
 other_Job.style.display = "none";
 
+//Toggle the other job input box
 job_Role.addEventListener("change", (e) => {
   if (e.target.value === "other") {
     other_Job.style.display = "block";
@@ -19,9 +20,9 @@ job_Role.addEventListener("change", (e) => {
 const shirt_Color = document.getElementById("color");
 const shirt_Color_Option = document.querySelectorAll("#color option");
 shirt_Color.disabled = true;
-
 const shirtDesign = document.getElementById("design");
 
+// Show & hide T-Shirt Color based on selected Design
 shirtDesign.addEventListener("change", (e) => {
   shirt_Color_Option[0].innerHTML = "&#11015 Select a shirt color &#11015";
   if (e.target.value === "js puns") {
@@ -31,6 +32,7 @@ shirtDesign.addEventListener("change", (e) => {
     }
     for (let i = 1; i < 4; i++) {
       shirt_Color_Option[i].style.display = "block";
+      shirt_Color_Option[0].selected = "true";
     }
   } else if (e.target.value === "heart js") {
     shirt_Color.disabled = false;
@@ -39,6 +41,7 @@ shirtDesign.addEventListener("change", (e) => {
     }
     for (let i = 6; i > 3; i--) {
       shirt_Color_Option[i].style.display = "block";
+      shirt_Color_Option[0].selected = "true";
     }
   }
 });
@@ -47,6 +50,7 @@ shirtDesign.addEventListener("change", (e) => {
 const activities = document.getElementById("activities");
 let total_Activity_Cost = 0;
 
+// Add/Substract Activity cost to the Total
 activities.addEventListener("change", (e) => {
   const activity = e.target;
   let activity_Cost = activity.getAttribute("data-cost");
@@ -71,6 +75,7 @@ bitcoin.style.display = "none";
 const paypal = document.querySelector("#paypal");
 paypal.style.display = "none";
 
+//Toggle Payment method info between Credit Card / Paypal / Bitcoin
 payment_Selector.addEventListener("change", (e) => {
   const credit_Card_info = document.querySelector("#credit-card");
   if (e.target.value === "paypal") {
@@ -91,6 +96,7 @@ payment_Selector.addEventListener("change", (e) => {
 /* Accessibility Section
    ========================================================================== */
 
+//Provide more visibility on the focused Activity
 for (let i = 0; i < activities_Checkbox.length; i++) {
   const activities_Label = activities_Checkbox[i].parentNode;
   activities_Checkbox[i].addEventListener("focus", (e) => {
@@ -106,7 +112,9 @@ for (let i = 0; i < activities_Checkbox.length; i++) {
 }
 
 /* Submit listener Section
-   ========================================================================== */
+   ==========================================================================
+   Submit listener loop throught an object to provide validation fonction
+*/
 const form = document.getElementsByTagName("form")[0];
 form.addEventListener("submit", (e) => {
   let i = 0;
@@ -145,9 +153,12 @@ form.addEventListener("submit", (e) => {
 
 /* Exceeds Expectations Section
    ========================================================================== */
+
+/* Click listener on the Activity Div to compare data-day-and-time of available
+ activity and disable same time activity  */
 const label = activities_box.children;
 activities_box.addEventListener("click", (e) => {
-  const test = e.target;
+  const activity_chosen = e.target;
   const event_Checkbox = e.target.getAttribute("data-day-and-time");
   if (event_Checkbox) {
     for (let i = 1; i < activities_Checkbox.length; i++) {
@@ -155,8 +166,11 @@ activities_box.addEventListener("click", (e) => {
       const to_Be_check = activities_Checkbox[i].getAttribute(
         "data-day-and-time"
       );
-      if (event_Checkbox === to_Be_check && test !== activities_Checkbox[i]) {
-        if (test.checked) {
+      if (
+        event_Checkbox === to_Be_check &&
+        activity_chosen !== activities_Checkbox[i]
+      ) {
+        if (activity_chosen.checked) {
           parent_Element.classList.add("disabled");
           activities_Checkbox[i].disabled = true;
         } else {
@@ -168,6 +182,10 @@ activities_box.addEventListener("click", (e) => {
   }
 });
 
+/* Real-time error message
+   ========================================================================== */
+
+//also embedded Conditional error message for blank and space.
 name_Input.addEventListener("keyup", (e) => {
   const parent_Name = name_Input.parentElement;
   const hint = parent_Name.querySelector("span:nth-child(3)");
@@ -188,7 +206,7 @@ name_Input.addEventListener("keyup", (e) => {
 
 email_Input.addEventListener("keyup", (e) => {
   const parent_Email = email_Input.parentElement;
-  const hint = parent_Name.querySelector("span:nth-child(3)");
+  const hint = parent_Email.querySelector("span:nth-child(3)");
   if (email_Input.value === "" || email_Input.value === " ") {
     hint.style.display = "none";
     parent_Email.lastElementChild.style.display = "block";

@@ -8,6 +8,7 @@ const cvv_Input = document.querySelector("#cvv");
 const activities_box = document.querySelector("#activities-box");
 const activities_Checkbox = document.querySelectorAll("#activities-box input");
 
+//Array used in the Submit event listener loop
 const input_list = [
   name_Input,
   email_Input,
@@ -19,6 +20,9 @@ const input_list = [
 
 const no_Credit_Card_input_list = [name_Input, email_Input, activities_box];
 
+/* Function Object
+   ========================================================================== */
+//used to loop in the submit event listener to DRY code.
 const functionList = {
   name: function () {
     const user_name = name_Input.value;
@@ -81,6 +85,7 @@ const no_Credit_card_functionList = {
 
 /* Validation function Section
    ========================================================================== */
+//Provide visual assistance for error commited while filling form
 const is_Valid = (element) => {
   const parent = element.parentElement;
   const hint = parent.querySelector("span:nth-child(3)");
