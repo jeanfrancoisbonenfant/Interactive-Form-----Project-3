@@ -117,13 +117,10 @@ form.addEventListener("submit", (e) => {
           e.preventDefault();
           is_Not_Valid(input_list[i]);
           i++;
-          console.log("error!");
           break;
         } else {
-          e.preventDefault();
           is_Valid(input_list[i]);
           i++;
-          console.log("woot woot!");
           break;
         }
       }
@@ -135,16 +132,87 @@ form.addEventListener("submit", (e) => {
           e.preventDefault();
           is_Not_Valid(no_Credit_Card_input_list[i]);
           i++;
-          console.log("else error!");
           break;
         } else {
-          e.preventDefault();
           is_Valid(no_Credit_Card_input_list[i]);
           i++;
-          console.log("else woot!");
           break;
         }
       }
     }
   }
 });
+
+/* Exceeds Expectations Section
+   ========================================================================== */
+const label = activities_box.children;
+activities_box.addEventListener("click", (e) => {
+  const test = e.target;
+  const event_Checkbox = e.target.getAttribute("data-day-and-time");
+  if (event_Checkbox) {
+    for (let i = 1; i < activities_Checkbox.length; i++) {
+      const parent_Element = activities_Checkbox[i].parentElement;
+      console.log(parent_Element);
+      const to_Be_check = activities_Checkbox[i].getAttribute(
+        "data-day-and-time"
+      );
+      if (event_Checkbox === to_Be_check && test !== activities_Checkbox[i]) {
+        if (test.checked) {
+          parent_Element.classList.add("disabled");
+          activities_Checkbox[i].disabled = true;
+        } else {
+          parent_Element.classList.remove("disabled");
+          activities_Checkbox[i].disabled = false;
+        }
+      }
+    }
+  }
+});
+
+name_Input.addEventListener("keyup", (e) => {
+  if (!functionList.name()) {
+    is_Not_Valid(name_Input);
+  } else {
+    is_Valid(name_Input);
+  }
+});
+
+email_Input.addEventListener("keyup", (e) => {
+  if (!functionList.email()) {
+    is_Not_Valid(email_Input);
+  } else {
+    is_Valid(email_Input);
+  }
+});
+
+activities_box.addEventListener("click", (e) => {
+  if (!functionList.activities()) {
+    is_Not_Valid(activities_box);
+  } else {
+    is_Valid(activities_box);
+  }
+});
+
+if (payment_Selector.value === "credit-card") {
+  credit_Card_Number_Input.addEventListener("keyup", (e) => {
+    if (!functionList.credit_Card()) {
+      is_Not_Valid(credit_Card_Number_Input);
+    } else {
+      is_Valid(credit_Card_Number_Input);
+    }
+  });
+  zip_code_Input.addEventListener("keyup", (e) => {
+    if (!functionList.zip_Code()) {
+      is_Not_Valid(zip_code_Input);
+    } else {
+      is_Valid(zip_code_Input);
+    }
+  });
+  cvv_Input.addEventListener("keyup", (e) => {
+    if (!functionList.cvv()) {
+      is_Not_Valid(cvv_Input);
+    } else {
+      is_Valid(cvv_Input);
+    }
+  });
+}

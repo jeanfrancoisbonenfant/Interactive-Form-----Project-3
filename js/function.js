@@ -7,6 +7,7 @@ const zip_code_Input = document.querySelector("#zip");
 const cvv_Input = document.querySelector("#cvv");
 const activities_box = document.querySelector("#activities-box");
 const activities_Checkbox = document.querySelectorAll("#activities-box input");
+
 const input_list = [
   name_Input,
   email_Input,
