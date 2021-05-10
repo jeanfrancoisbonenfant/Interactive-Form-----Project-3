@@ -88,60 +88,6 @@ payment_Selector.addEventListener("change", (e) => {
   }
 });
 
-/* Validation Section
-   ========================================================================== */
-const name_Input = document.querySelector("#name");
-const email_Input = document.querySelector("#email");
-const credit_Card_Number_Input = document.querySelector("#cc-num");
-const zip_code_Input = document.querySelector("#zip");
-const cvv_Input = document.querySelector("#cvv");
-const activities_box = document.querySelector("#activities-box");
-const activities_Checkbox = document.querySelectorAll("#activities-box input");
-const input_list = [
-  name_Input,
-  email_Input,
-  activities_box,
-  credit_Card_Number_Input,
-  zip_code_Input,
-  cvv_Input,
-];
-
-const functionList = {
-  name: function () {
-    const user_name = name_Input.value;
-    return /^[A-Za-z]+$/.test(user_name);
-  },
-  email: function () {
-    const email = email_Input.value;
-    return /^[^@]+@+[^@]+\.[a-z]+$/.test(email);
-  },
-  activities: function () {
-    let scheduled_Activities = 0;
-    for (let i = 0; i < activities_Checkbox.length; i++) {
-      if (activities_Checkbox[i].checked) {
-        scheduled_Activities++;
-      }
-    }
-    if (scheduled_Activities > 0) {
-      return true;
-    } else {
-      return false;
-    }
-  },
-  credit_Card: function () {
-    const credit_Card_Number = credit_Card_Number_Input.value;
-    return /^[0-9]{13,16}$/.test(credit_Card_Number);
-  },
-  zip_Code: function () {
-    const zip_code = zip_code_Input.value;
-    return /^[0-9]{5}$/.test(zip_code);
-  },
-  cvv: function () {
-    const cvv = cvv_Input.value;
-    return /^[0-9]{3}$/.test(cvv);
-  },
-};
-
 /* Accessibility Section
    ========================================================================== */
 
@@ -159,135 +105,46 @@ for (let i = 0; i < activities_Checkbox.length; i++) {
   });
 }
 
-/* Validation function Section
-   ========================================================================== */
-const is_Valid = (element) => {
-  const parent = element.parentElement;
-  parent.classList.remove("not-valid");
-  parent.classList.add("valid");
-  parent.lastElementChild.style.display = "none";
-};
-const is_Not_Valid = (element) => {
-  const parent = element.parentElement;
-  parent.classList.remove("valid");
-  parent.classList.add("not-valid");
-  parent.lastElementChild.style.display = "block";
-};
-
 /* Submit listener Section
    ========================================================================== */
 const form = document.getElementsByTagName("form")[0];
 form.addEventListener("submit", (e) => {
   let i = 0;
-  for (let key in functionList) {
-    for (i = i; i < input_list.length; ) {
-      if (!functionList[key]()) {
-        e.preventDefault();
-        is_Not_Valid(input_list[i]);
-        i++;
-        console.log("error!");
-        break;
-      } else {
-        e.preventDefault();
-        is_Valid(input_list[i]);
-        i++;
-        console.log("woot woot!");
-        break;
+  if (payment_Selector.value === "credit-card") {
+    for (let key in functionList) {
+      for (i = i; i < input_list.length; ) {
+        if (!functionList[key]()) {
+          e.preventDefault();
+          is_Not_Valid(input_list[i]);
+          i++;
+          console.log("error!");
+          break;
+        } else {
+          e.preventDefault();
+          is_Valid(input_list[i]);
+          i++;
+          console.log("woot woot!");
+          break;
+        }
+      }
+    }
+  } else {
+    for (let key in no_Credit_card_functionList) {
+      for (i = i; i < no_Credit_Card_input_list.length; ) {
+        if (!no_Credit_card_functionList[key]()) {
+          e.preventDefault();
+          is_Not_Valid(no_Credit_Card_input_list[i]);
+          i++;
+          console.log("else error!");
+          break;
+        } else {
+          e.preventDefault();
+          is_Valid(no_Credit_Card_input_list[i]);
+          i++;
+          console.log("else woot!");
+          break;
+        }
       }
     }
   }
 });
-
-/*
-form.addEventListener("submit", (e) => {
-  const name_Input_Parent = name_Input.parentNode;
-  const name_Hint = document.querySelector("#name-hint");
-  if (!is_Valid_Name()) {
-    e.preventDefault();
-    name_Hint.style.display = "block";
-    name_Input_Parent.className = "";
-    name_Input_Parent.className = "not-valid";
-  } else {
-    e.preventDefault();
-    name_Input_Parent.className = "";
-    name_Input_Parent.className = "valid";
-    name_Hint.style.display = "none";
-  }
-  const email_field_Parent = email_field.parentNode;
-  const email_Hint = document.querySelector("#email-hint");
-  if (!is_Valid_email()) {
-    e.preventDefault();
-    email_Hint.style.display = "block";
-    email_field_Parent.classList.remove("valid");
-    email_field_Parent.classList.add("not-valid");
-  } else {
-    e.preventDefault();
-    email_field_Parent.classList.remove("not-valid");
-    email_field_Parent.classList.add("valid");
-    email_Hint.style.display = "none";
-  }
-  const activities = document.querySelector("#activities");
-  const activities_Hint = document.querySelector("#activities-hint");
-  if (!is_Valid_Activities()) {
-    e.preventDefault();
-    activities_Hint.style.display = "block";
-    activities.classList.remove("valid");
-    activities.classList.add("not-valid");
-  } else {
-    e.preventDefault();
-    activities.classList.remove("not-valid");
-    activities.classList.add("valid");
-    activities_Hint.style.display = "none";
-  }
-  if (payment_Selector.value === "credit-card") {
-    const Credit_Card_field_Parent = credit_Card_Number_field.parentNode;
-    const Credit_Card_Hint = document.querySelector("#cc-hint");
-    if (!is_Valid_Credit_Card()) {
-      e.preventDefault();
-      Credit_Card_Hint.style.display = "block";
-      Credit_Card_field_Parent.className = "";
-      Credit_Card_field_Parent.className = "not-valid";
-      console.log("error!");
-    } else {
-      e.preventDefault();
-      Credit_Card_field_Parent.className = "";
-      Credit_Card_field_Parent.className = "valid";
-      Credit_Card_Hint.style.display = "none";
-      console.log("woot woot");
-    }
-    const zip_Code_Field_Parent = zip_code_field.parentNode;
-    const Zip_Code_Hint = document.querySelector("#zip-hint");
-    if (!is_Valid_Zip_Code()) {
-      e.preventDefault();
-      Zip_Code_Hint.style.display = "block";
-      zip_Code_Field_Parent.className = "";
-      zip_Code_Field_Parent.className = "not-valid";
-      console.log("error!");
-    } else {
-      e.preventDefault();
-      zip_Code_Field_Parent.className = "";
-      zip_Code_Field_Parent.className = "valid";
-      Zip_Code_Hint.style.display = "none";
-      console.log("woot woot");
-    }
-    const cvv_Field_Parent = cvv_field.parentNode;
-    const cvv_Hint = document.querySelector("#cvv-hint");
-    if (!is_Valid_Cvv()) {
-      e.preventDefault();
-      cvv_Hint.style.display = "block";
-      cvv_Field_Parent.className = "";
-      cvv_Field_Parent.className = "not-valid";
-      console.log("error!");
-    } else {
-      e.preventDefault();
-      cvv_Field_Parent.className = "";
-      cvv_Field_Parent.className = "valid";
-      cvv_Hint.style.display = "none";
-      console.log("woot woot");
-    }
-  }
-  /*
-  
-  
-});
-*/
