@@ -83,13 +83,15 @@ const no_Credit_card_functionList = {
    ========================================================================== */
 const is_Valid = (element) => {
   const parent = element.parentElement;
+  const hint = parent.querySelector("span:nth-child(3)");
   parent.classList.remove("not-valid");
   parent.classList.add("valid");
-  parent.lastElementChild.style.display = "none";
+  hint.style.display = "none";
 };
 const is_Not_Valid = (element) => {
   const parent = element.parentElement;
+  const hint = parent.querySelector("span:nth-child(3)");
   parent.classList.remove("valid");
   parent.classList.add("not-valid");
-  parent.lastElementChild.style.display = "block";
+  hint.style.display = "block";
 };

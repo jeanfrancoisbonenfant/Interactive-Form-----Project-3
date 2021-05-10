@@ -152,7 +152,6 @@ activities_box.addEventListener("click", (e) => {
   if (event_Checkbox) {
     for (let i = 1; i < activities_Checkbox.length; i++) {
       const parent_Element = activities_Checkbox[i].parentElement;
-      console.log(parent_Element);
       const to_Be_check = activities_Checkbox[i].getAttribute(
         "data-day-and-time"
       );
@@ -170,26 +169,39 @@ activities_box.addEventListener("click", (e) => {
 });
 
 name_Input.addEventListener("keyup", (e) => {
-  if (!functionList.name()) {
-    is_Not_Valid(name_Input);
+  const parent_Name = name_Input.parentElement;
+  const hint = parent_Name.querySelector("span:nth-child(3)");
+  if (name_Input.value === "" || name_Input.value === " ") {
+    hint.style.display = "none";
+    parent_Name.lastElementChild.style.display = "block";
+    parent_Name.classList.add("not-valid");
   } else {
-    is_Valid(name_Input);
+    parent_Name.lastElementChild.style.display = "none";
+    parent_Name.classList.remove("not-valid");
+    if (!functionList.name()) {
+      is_Not_Valid(name_Input);
+    } else {
+      is_Valid(name_Input);
+    }
   }
 });
 
 email_Input.addEventListener("keyup", (e) => {
-  if (!functionList.email()) {
-    is_Not_Valid(email_Input);
+  const parent_Email = email_Input.parentElement;
+  const hint = parent_Name.querySelector("span:nth-child(3)");
+  if (email_Input.value === "" || email_Input.value === " ") {
+    hint.style.display = "none";
+    parent_Email.lastElementChild.style.display = "block";
+    parent_Email.classList.add("not-valid");
   } else {
-    is_Valid(email_Input);
-  }
-});
+    parent_Email.lastElementChild.style.display = "none";
+    parent_Email.classList.remove("not-valid");
 
-activities_box.addEventListener("click", (e) => {
-  if (!functionList.activities()) {
-    is_Not_Valid(activities_box);
-  } else {
-    is_Valid(activities_box);
+    if (!functionList.email()) {
+      is_Not_Valid(email_Input);
+    } else {
+      is_Valid(email_Input);
+    }
   }
 });
 
