@@ -18,3 +18,5 @@ Name & email Validation have been provided with 2 different error message
 1.Input being blank or space only error in real-time message
 2.Invalid format any special caracter trigger the name error & wrong email format.
 2 a) Format verification is verifed on real-time message & on submission of the form.
+
+Live link: https://jeanfrancoisbonenfant.github.io/Interactive-Form-----Project-3/
