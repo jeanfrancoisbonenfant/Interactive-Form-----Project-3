@@ -95,11 +95,12 @@ const email_Input = document.querySelector("#email");
 const credit_Card_Number_Input = document.querySelector("#cc-num");
 const zip_code_Input = document.querySelector("#zip");
 const cvv_Input = document.querySelector("#cvv");
+const activities_box = document.querySelector("#activities-box");
 const activities_Checkbox = document.querySelectorAll("#activities-box input");
 const input_list = [
   name_Input,
   email_Input,
-  activities_Checkbox,
+  activities_box,
   credit_Card_Number_Input,
   zip_code_Input,
   cvv_Input,
@@ -161,13 +162,13 @@ for (let i = 0; i < activities_Checkbox.length; i++) {
 /* Validation function Section
    ========================================================================== */
 const is_Valid = (element) => {
-  const parent = element.parentNode;
+  const parent = element.parentElement;
   parent.classList.remove("not-valid");
   parent.classList.add("valid");
   parent.lastElementChild.style.display = "none";
 };
 const is_Not_Valid = (element) => {
-  const parent = element.parentNode;
+  const parent = element.parentElement;
   parent.classList.remove("valid");
   parent.classList.add("not-valid");
   parent.lastElementChild.style.display = "block";
@@ -177,16 +178,19 @@ const is_Not_Valid = (element) => {
    ========================================================================== */
 const form = document.getElementsByTagName("form")[0];
 form.addEventListener("submit", (e) => {
+  let i = 0;
   for (let key in functionList) {
-    for (let i = 0; i < input_list.length; i++) {
+    for (i = i; i < input_list.length; ) {
       if (!functionList[key]()) {
         e.preventDefault();
         is_Not_Valid(input_list[i]);
+        i++;
         console.log("error!");
         break;
       } else {
         e.preventDefault();
         is_Valid(input_list[i]);
+        i++;
         console.log("woot woot!");
         break;
       }
